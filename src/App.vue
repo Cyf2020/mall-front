@@ -1,28 +1,30 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div id="app" :style="getStyle()">
+    <router-view></router-view>
+    <button @click="changeColorMode()">模式切换</button>
+    <MainTabBar></MainTabBar>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
+import MainTabBar from './components/content/MainTabBar.vue'
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    MainTabBar,
+  },
+  methods: {
+    changeColorMode(){
+      this.$store.commit('changeColorMode');
+    },
+    getStyle() {
+      let theme=this.$store.getters.getCurrentTheme();
+      return {backgroundColor: theme.backgroundColor, color: theme.color}
+    }
   }
 }
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+@import "assets/css/base.css";
 </style>
